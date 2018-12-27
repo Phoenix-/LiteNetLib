@@ -1,6 +1,6 @@
-#if DEBUG
-#define STATS_ENABLED
-#endif
+//#if DEBUG
+//#define STATS_ENABLED
+//#endif
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;

@@ -19,7 +19,7 @@ namespace LiteNetLib
 
     internal interface IConnectionRequestListener
     {
-        void OnConnectionSolved(ConnectionRequest request, byte[] rejectData, int start, int length);
+        void OnConnectionSolved(ConnectionRequest request, byte[] rejectData, int start, int length, NetDataWriter connectionData);
     }
 
     public class ConnectionRequest
@@ -57,7 +57,7 @@ namespace LiteNetLib
             _listener = listener;
         }
 
-        public NetPeer AcceptIfKey(string key)
+        public NetPeer AcceptIfKey(string key, NetDataWriter connectionData = null)
         {
             if (!TryActivate())
                 return null;
@@ -67,7 +67,7 @@ namespace LiteNetLib
                 if (dataKey == key)
                 {
                     Result = ConnectionRequestResult.Accept;
-                    _listener.OnConnectionSolved(this, null, 0, 0);
+                    _listener.OnConnectionSolved(this, null, 0, 0, connectionData);
                     return Peer;
                 }
             }
@@ -76,7 +76,7 @@ namespace LiteNetLib
                 NetDebug.WriteError("[AC] Invalid incoming data");
             }
             Result = ConnectionRequestResult.Reject;
-            _listener.OnConnectionSolved(this, null, 0, 0);
+            _listener.OnConnectionSolved(this, null, 0, 0, connectionData);
             return null;
         }
 
@@ -84,21 +84,21 @@ namespace LiteNetLib
         /// Accept connection and get new NetPeer as result
         /// </summary>
         /// <returns>Connected NetPeer</returns>
-        public NetPeer Accept()
+        public NetPeer Accept(NetDataWriter connectionData = null)
         {
             if (!TryActivate())
                 return null;
             Result = ConnectionRequestResult.Accept;
-            _listener.OnConnectionSolved(this, null, 0, 0);
+            _listener.OnConnectionSolved(this, null, 0, 0, connectionData);
             return Peer;
         }
 
-        public void Reject(byte[] rejectData, int start, int length)
+        public void Reject(byte[] rejectData, int start, int length, NetDataWriter connectionData = null)
         {
             if (!TryActivate())
                 return;
             Result = ConnectionRequestResult.Reject;
-            _listener.OnConnectionSolved(this, rejectData, start, length);
+            _listener.OnConnectionSolved(this, rejectData, start, length, connectionData);
         }
 
         public void Reject()

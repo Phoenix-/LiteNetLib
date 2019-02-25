@@ -13,7 +13,7 @@ namespace LibSample
         {
             public NetManager Client;
 
-            public void OnPeerConnected(NetPeer peer)
+            public void OnPeerConnected(NetPeer peer, NetDataReader dataReader)
             {
                 Console.WriteLine("[Client {0}] connected to: {1}:{2}", Client.LocalPort, peer.EndPoint.Address, peer.EndPoint.Port);
             }
@@ -57,7 +57,7 @@ namespace LibSample
         {
             public NetManager Server;
 
-            public void OnPeerConnected(NetPeer peer)
+            public void OnPeerConnected(NetPeer peer, NetDataReader dataReader)
             {
                 Console.WriteLine("[Server] Peer connected: " + peer.EndPoint);
                 var peers = Server.GetPeers(ConnectionState.Connected);

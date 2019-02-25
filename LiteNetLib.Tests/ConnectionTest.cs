@@ -25,7 +25,7 @@ namespace LiteNetLib.Tests
             ManagerStack?.Dispose();
         }
 
-        private const int DefaultPort = 9050;
+        private const int DefaultPort = 9051;
         private const string DefaultAppKey = "test_server";
 
         public NetManagerStack ManagerStack { get; set; }
@@ -83,7 +83,7 @@ namespace LiteNetLib.Tests
             var result = false;
             DisconnectInfo disconnectInfo = default(DisconnectInfo);
 
-            ManagerStack.ClientListener(1).PeerConnectedEvent += peer =>
+            ManagerStack.ClientListener(1).PeerConnectedEvent += (peer, dataReader) =>
             {
                 result = true;
             };
@@ -148,7 +148,7 @@ namespace LiteNetLib.Tests
             var client = ManagerStack.Client(1);
             int connectCount = 0;
             bool reconnected = false;
-            ManagerStack.ServerListener(1).PeerConnectedEvent += peer =>
+            ManagerStack.ServerListener(1).PeerConnectedEvent += (peer, dataReader) =>
             {
                 if (connectCount == 0)
                 {
@@ -313,7 +313,7 @@ namespace LiteNetLib.Tests
             client.Stop();
 
             var connected = false;
-            listener.PeerConnectedEvent += (peer) =>
+            listener.PeerConnectedEvent += (peer, dataReader) =>
             {
                 connected = true;
             };

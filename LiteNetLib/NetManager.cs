@@ -464,7 +464,7 @@ namespace LiteNetLib
             switch (evt.Type)
             {
                 case NetEvent.EType.Connect:
-                    _netEventListener.OnPeerConnected(evt.Peer);
+                    _netEventListener.OnPeerConnected(evt.Peer, evt.DataReader);
                     break;
                 case NetEvent.EType.Disconnect:
                     var info = new DisconnectInfo
@@ -631,7 +631,7 @@ namespace LiteNetLib
             }
         }
 
-        void IConnectionRequestListener.OnConnectionSolved(ConnectionRequest request, byte[] rejectData, int start, int length)
+        void IConnectionRequestListener.OnConnectionSolved(ConnectionRequest request, byte[] rejectData, int start, int length, NetDataWriter connectionData)
         {
             if (request.Result == ConnectionRequestResult.Reject)
             {
@@ -641,7 +641,7 @@ namespace LiteNetLib
             else
             {
                 //Accept
-                request.Peer.Accept(request.ConnectionId, request.ConnectionNumber);
+                request.Peer.Accept(request.ConnectionId, request.ConnectionNumber, connectionData);
                 //TODO: sync
                 //Add event
                 CreateEvent(NetEvent.EType.Connect, request.Peer);
@@ -829,7 +829,7 @@ namespace LiteNetLib
                 case PacketProperty.ConnectAccept:
                     var connAccept = NetConnectAcceptPacket.FromData(packet);
                     if (connAccept != null && peerFound && netPeer.ProcessConnectAccept(connAccept))
-                        CreateEvent(NetEvent.EType.Connect, netPeer);
+                        CreateEvent(NetEvent.EType.Connect, netPeer, readerSource: packet);
                     break;
                 case PacketProperty.ConnectRequest:
                     if (NetConnectRequestPacket.GetProtocolId(packet) != NetConstants.ProtocolId)

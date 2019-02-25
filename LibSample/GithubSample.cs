@@ -21,7 +21,7 @@ namespace LibSample
                     request.Reject();
             };
 
-            listener.PeerConnectedEvent += peer =>
+            listener.PeerConnectedEvent += (peer, dataReader) =>
             {
                 Console.WriteLine("We got connection: {0}", peer.EndPoint); // Show peer ip
                 NetDataWriter writer = new NetDataWriter();                 // Create writer class

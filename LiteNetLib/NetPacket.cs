@@ -227,9 +227,6 @@ namespace LiteNetLib
 
         public static NetConnectAcceptPacket FromData(NetPacket packet)
         {
-            if (packet.Size > Size)
-                return null;
-
             long connectionId = BitConverter.ToInt64(packet.RawData, 1);
             //check connect num
             byte connectionNumber = packet.RawData[9];
@@ -243,12 +240,13 @@ namespace LiteNetLib
             return new NetConnectAcceptPacket(connectionId, connectionNumber, isReused == 1);
         }
 
-        public static NetPacket Make(long connectId, byte connectNum, bool reusedPeer)
+        public static NetPacket Make(NetDataWriter connectData, long connectId, byte connectNum, bool reusedPeer)
         {
-            var packet = new NetPacket(PacketProperty.ConnectAccept, 0);
+            var packet = new NetPacket(PacketProperty.ConnectAccept, connectData.Length);
             FastBitConverter.GetBytes(packet.RawData, 1, connectId);
             packet.RawData[9] = connectNum;
             packet.RawData[10] = (byte)(reusedPeer ? 1 : 0);
+            Buffer.BlockCopy(connectData.Data, 0, packet.RawData, Size, connectData.Length);
             return packet;
         }
     }

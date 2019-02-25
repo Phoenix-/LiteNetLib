@@ -13,7 +13,7 @@ namespace LibSample
 
         private class ClientListener : INetEventListener
         {
-            public void OnPeerConnected(NetPeer peer)
+            public void OnPeerConnected(NetPeer peer, NetDataReader dataReader)
             {
                 Console.WriteLine("[Client] connected to: {0}:{1}", peer.EndPoint.Address, peer.EndPoint.Port);
 
@@ -101,7 +101,7 @@ namespace LibSample
         {
             public NetManager Server;
 
-            public void OnPeerConnected(NetPeer peer)
+            public void OnPeerConnected(NetPeer peer, NetDataReader dataReader)
             {
                 Console.WriteLine("[Server] Peer connected: " + peer.EndPoint);
                 var peers = Server.GetPeers(ConnectionState.Connected);

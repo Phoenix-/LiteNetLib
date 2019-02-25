@@ -90,7 +90,7 @@ namespace LibSample
             EventBasedNatPunchListener natPunchListener1 = new EventBasedNatPunchListener();
             EventBasedNatPunchListener natPunchListener2 = new EventBasedNatPunchListener();
 
-            netListener.PeerConnectedEvent += peer =>
+            netListener.PeerConnectedEvent += (peer, dataReader) =>
             {
                 Console.WriteLine("PeerConnected: " + peer.EndPoint.ToString());
             };

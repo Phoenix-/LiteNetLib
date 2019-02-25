@@ -235,14 +235,14 @@ namespace LiteNetLib
         }
 
         //"Accept" incoming constructor
-        internal void Accept(long connectId, byte connectNum)
+        internal void Accept(long connectId, byte connectNum, NetDataWriter connectData)
         {
             _connectTime = connectId;
             _connectionState = ConnectionState.Connected;
             ConnectionNum = connectNum;
 
             //Make initial packet
-            _connectAcceptPacket = NetConnectAcceptPacket.Make(_connectTime, connectNum, false);
+            _connectAcceptPacket = NetConnectAcceptPacket.Make(connectData, _connectTime, connectNum, false);
             //Send
             _netManager.SendRaw(_connectAcceptPacket, _remoteEndPoint);
 

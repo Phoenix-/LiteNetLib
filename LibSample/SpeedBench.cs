@@ -65,7 +65,7 @@ namespace LibSample
             {
             }
 
-            void INetEventListener.OnPeerConnected(NetPeer peer)
+            void INetEventListener.OnPeerConnected(NetPeer peer, NetDataReader dataReader)
             {
 
             }
@@ -149,7 +149,7 @@ namespace LibSample
             {
             }
 
-            void INetEventListener.OnPeerConnected(NetPeer peer)
+            void INetEventListener.OnPeerConnected(NetPeer peer, NetDataReader dataReader)
             {
             }
 

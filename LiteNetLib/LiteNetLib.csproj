@@ -13,7 +13,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
     <DebugSymbols>true</DebugSymbols>
     <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;STATS_ENABLED</DefineConstants>
+    <DefineConstants>DEBUG;STATS_ENABLED;DISABLE_IPV6</DefineConstants>
     <DebugType>full</DebugType>
     <PlatformTarget>AnyCPU</PlatformTarget>
     <UseVSHostingProcess>false</UseVSHostingProcess>
@@ -35,7 +35,7 @@
     <WarningLevel>4</WarningLevel>
     <DocumentationFile>bin\Release\LiteNetLib.xml</DocumentationFile>
     <NoWarn>1591</NoWarn>
-    <DefineConstants>STATS_ENABLED</DefineConstants>
+    <DefineConstants>STATS_ENABLED;DISABLE_IPV6</DefineConstants>
     <LangVersion>4</LangVersion>
   </PropertyGroup>
   <PropertyGroup>
